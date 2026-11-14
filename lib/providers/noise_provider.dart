@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import '../logic/alert_engine.dart';
 import '../data/repositories/noise_repository.dart';
 import '../data/services/mock_noise_api_service.dart';
 import '../models/noise_data.dart';
@@ -45,6 +46,18 @@ class NoiseProvider extends ChangeNotifier {
     }
     return null;
   }
+
+    /// Alerta (com justificativa) de uma região.
+  Alert? alertOf(String regionId) {
+    final regiao = regionById(regionId);
+    if (regiao == null) return null;
+    return AlertEngine.analisar(regiao, readingsOf(regionId));
+  }
+
+  /// Alertas de todas as regiões.
+  List<Alert> get alerts => [
+        for (final r in regions) AlertEngine.analisar(r, readingsOf(r.id)),
+      ];
 
   // ---- Ações ----
 

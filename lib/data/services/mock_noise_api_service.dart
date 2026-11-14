@@ -59,7 +59,7 @@ class MockNoiseApiService {
         [NoiseSource.eventos, NoiseSource.comercio, NoiseSource.transito]),
     'mooca': _Perfil(53, 0.45, [NoiseSource.obras, NoiseSource.transito]),
     'centro': _Perfil(63, 0.05, [NoiseSource.transito, NoiseSource.comercio]),
-    'vila_mariana': _Perfil(48, 0.25, [NoiseSource.transito, NoiseSource.obras]),
+    'vila_mariana': _Perfil(44, 0.25, [NoiseSource.transito, NoiseSource.obras]),
     'santana': _Perfil(50, -0.10, [NoiseSource.transito, NoiseSource.outros]),
     'barra_funda': _Perfil(64, 0.0, [NoiseSource.transito, NoiseSource.obras]),
   };

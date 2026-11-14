@@ -30,7 +30,8 @@ class _LevelsDashboardState extends State<LevelsDashboard> {
     }
 
     final regiao = p.regionById(_regionId ?? '') ?? p.regions.first;
-    final pontos = NoiseStats.mediaDiariaDiurna(p.readingsOf(regiao.id));
+    final pontos =
+    NoiseStats.mediaDiariaDiurna(p.readingsOf(regiao.id), minLeituras: 5);
     if (pontos.isEmpty) {
       return const EmptyView(message: 'Sem leituras para esta região.');
     }

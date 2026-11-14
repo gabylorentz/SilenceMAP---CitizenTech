@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/theme/app_colors.dart';
-import '../../logic/noise_level.dart';
+import '../../logic/alert_engine.dart';
 import '../../providers/noise_provider.dart';
 import '../widgets/level_badge.dart';
 import '../widgets/metric_card.dart';
@@ -21,17 +21,18 @@ class ImpactDashboard extends StatelessWidget {
       return const EmptyView(message: 'Nenhuma região disponível.');
     }
 
-    // Regiões com a leitura mais recente acima do limite da zona.
-    final expostas = regioes.where((r) {
-      final leitura = p.latestOf(r.id);
-      if (leitura == null) return false;
-      final nivel = NoiseLevel.of(r, leitura);
-      return nivel == NoiseLevel.alerta || nivel == NoiseLevel.critico;
-    }).toList();
+    final alertas = p.alerts;
+    // Expostas: limite já excedido. Protegidas: tendência de alta detectada
+    // antes de o limite ser ultrapassado.
+    final expostas = alertas.where((a) => a.kind == AlertKind.excedido);
+    final protegidas =
+        alertas.where((a) => a.kind == AlertKind.preventivo).toList();
 
-    final escolas = expostas.fold<int>(0, (s, r) => s + r.escolas);
-    final hospitais = expostas.fold<int>(0, (s, r) => s + r.hospitais);
+    final escolas = expostas.fold<int>(0, (s, a) => s + a.regiao.escolas);
+    final hospitais = expostas.fold<int>(0, (s, a) => s + a.regiao.hospitais);
     final reclamacoes = regioes.fold<int>(0, (s, r) => s + r.reclamacoesMes);
+    final locaisProtegidos =
+        protegidas.fold<int>(0, (s, a) => s + a.regiao.locaisSensiveis);
 
     final porReclamacao = [...regioes]
       ..sort((a, b) => b.reclamacoesMes.compareTo(a.reclamacoesMes));
@@ -74,8 +75,40 @@ class ImpactDashboard extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          'Exposto = escola ou hospital em região com leitura acima do limite da NBR 10151.',
+          'Exposto = escola ou hospital em região com a média diurna acima do limite da NBR 10151.',
           style: text.bodySmall,
+        ),
+        const SizedBox(height: 12),
+        SectionCard(
+          title: 'Protegidos por alerta antecipado',
+          subtitle: 'Locais sensíveis em regiões com tendência de alta, '
+              'ainda abaixo do limite.',
+          child: Row(
+            children: [
+              const Icon(Icons.shield_outlined,
+                  size: 40, color: AppColors.secondary),
+              const SizedBox(width: 12),
+              Expanded(
+                child: protegidas.isEmpty
+                    ? const Text(
+                        'Nenhuma região com alerta antecipado no momento.')
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '$locaisProtegidos escolas e hospitais',
+                            style: text.titleMedium
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            'Regiões: ${protegidas.map((a) => a.regiao.nome).join(', ')}',
+                            style: text.bodySmall,
+                          ),
+                        ],
+                      ),
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 12),
         SectionCard(
@@ -147,21 +180,15 @@ class ImpactDashboard extends StatelessWidget {
           title: 'Locais sensíveis por região',
           child: Column(
             children: [
-              for (final r in regioes)
-                Builder(builder: (context) {
-                  final leitura = p.latestOf(r.id);
-                  final nivel =
-                      leitura == null ? null : NoiseLevel.of(r, leitura);
-                  return ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(r.nome),
-                    subtitle: Text(
-                        '${r.escolas} escolas · ${r.hospitais} hospitais'),
-                    trailing: nivel == null
-                        ? null
-                        : LevelBadge(label: nivel.rotulo, color: nivel.cor),
-                  );
-                }),
+              for (final a in alertas)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(a.regiao.nome),
+                  subtitle: Text(
+                      '${a.regiao.escolas} escolas · ${a.regiao.hospitais} hospitais'),
+                  trailing:
+                      LevelBadge(label: a.nivel.rotulo, color: a.nivel.cor),
+                ),
             ],
           ),
         ),

@@ -4,9 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../core/routes/app_routes.dart';
 import '../../core/theme/app_colors.dart';
-import '../../logic/noise_level.dart';
-import '../../models/noise_reading.dart';
-import '../../models/region.dart';
+import '../../logic/alert_engine.dart';
 import '../../providers/noise_provider.dart';
 import '../widgets/level_badge.dart';
 import '../widgets/metric_card.dart';
@@ -34,17 +32,16 @@ class _Loaded extends StatelessWidget {
   final NoiseProvider provider;
   const _Loaded({required this.provider});
 
-  int _emAlerta() => provider.regions.where((r) {
-        final leitura = provider.latestOf(r.id);
-        if (leitura == null) return false;
-        final nivel = NoiseLevel.of(r, leitura);
-        return nivel == NoiseLevel.alerta || nivel == NoiseLevel.critico;
-      }).length;
-
   @override
   Widget build(BuildContext context) {
     final p = provider;
     final text = Theme.of(context).textTheme;
+
+    final alertas = p.alerts;
+    final ativos = alertas.where((a) => a.ativo).length;
+    // Mais graves primeiro.
+    final ordenados = [...alertas]
+      ..sort((a, b) => b.nivel.index.compareTo(a.nivel.index));
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
@@ -76,8 +73,8 @@ class _Loaded extends StatelessWidget {
             Expanded(
               child: MetricCard(
                 icon: Icons.warning_amber_rounded,
-                label: 'Regiões em alerta',
-                value: '${_emAlerta()}',
+                label: 'Regiões com alerta',
+                value: '$ativos',
                 color: AppColors.alerta,
               ),
             ),
@@ -86,9 +83,10 @@ class _Loaded extends StatelessWidget {
         const SizedBox(height: 20),
         Text('Regiões',
             style: text.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+        Text('Média diurna dos últimos 3 dias', style: text.bodySmall),
         const SizedBox(height: 8),
-        for (final r in p.regions) ...[
-          _RegionCard(regiao: r, leitura: p.latestOf(r.id)),
+        for (final a in ordenados) ...[
+          _RegionCard(alerta: a),
           const SizedBox(height: 8),
         ],
         const SizedBox(height: 8),
@@ -102,14 +100,12 @@ class _Loaded extends StatelessWidget {
 }
 
 class _RegionCard extends StatelessWidget {
-  final Region regiao;
-  final NoiseReading? leitura;
-  const _RegionCard({required this.regiao, required this.leitura});
+  final Alert alerta;
+  const _RegionCard({required this.alerta});
 
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
-    final nivel = leitura == null ? null : NoiseLevel.of(regiao, leitura!);
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -117,7 +113,7 @@ class _RegionCard extends StatelessWidget {
         onTap: () => Navigator.pushNamed(
           context,
           AppRoutes.alertDetail,
-          arguments: regiao.id,
+          arguments: alerta.regiao.id,
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -127,11 +123,15 @@ class _RegionCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(regiao.nome,
+                    Text(alerta.regiao.nome,
                         style: text.titleMedium
                             ?.copyWith(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 2),
-                    Text(regiao.zona.rotulo, style: text.bodySmall),
+                    Text(alerta.regiao.zona.rotulo, style: text.bodySmall),
+                    const SizedBox(height: 2),
+                    Text(alerta.titulo,
+                        style: text.bodySmall
+                            ?.copyWith(fontWeight: FontWeight.w600)),
                   ],
                 ),
               ),
@@ -139,15 +139,15 @@ class _RegionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    leitura == null
+                    alerta.mediaAtual == null
                         ? '-'
-                        : '${leitura!.decibeis.toStringAsFixed(1)} dB',
+                        : '${AlertEngine.fmt(alerta.mediaAtual!)} dB',
                     style: text.titleMedium
                         ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
-                  if (nivel != null)
-                    LevelBadge(label: nivel.rotulo, color: nivel.cor),
+                  LevelBadge(
+                      label: alerta.nivel.rotulo, color: alerta.nivel.cor),
                 ],
               ),
               const SizedBox(width: 4),

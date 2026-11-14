@@ -14,14 +14,21 @@ class NoiseStats {
 
   /// Média diária usando só as leituras diurnas (7h às 22h),
   /// para comparar com o limite diurno da NBR 10151.
-  static List<DailyPoint> mediaDiariaDiurna(List<NoiseReading> leituras) {
+  /// Dias com menos de [minLeituras] leituras diurnas são descartados.
+  static List<DailyPoint> mediaDiariaDiurna(
+    List<NoiseReading> leituras, {
+    int minLeituras = 1,
+  }) {
     final porDia = <DateTime, List<double>>{};
     for (final l in leituras) {
       if (l.isNoturno) continue;
       final dia = DateTime(l.dataHora.year, l.dataHora.month, l.dataHora.day);
       porDia.putIfAbsent(dia, () => []).add(l.decibeis);
     }
-    final dias = porDia.keys.toList()..sort();
+    final dias = porDia.keys
+        .where((d) => porDia[d]!.length >= minLeituras)
+        .toList()
+      ..sort();
     return [for (final d in dias) DailyPoint(d, _media(porDia[d]!))];
   }
 

@@ -76,7 +76,7 @@ class AlertDetailScreen extends StatelessWidget {
                             ? '-'
                             : '${AlertEngine.fmtSinal(alerta.tendencia!)} dB/dia',
                         color: (alerta.tendencia ?? 0) >=
-                                AlertEngine.inclinacaoMinima
+                        p.alertConfig.inclinacaoMinima
                             ? AppColors.alerta
                             : AppColors.normal,
                       ),

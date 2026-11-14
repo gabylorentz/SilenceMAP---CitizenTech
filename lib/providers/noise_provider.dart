@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 
-import '../logic/alert_engine.dart';
 import '../data/repositories/noise_repository.dart';
 import '../data/services/mock_noise_api_service.dart';
+import '../logic/alert_engine.dart';
+import '../models/alert_config.dart';
 import '../models/noise_data.dart';
 import '../models/noise_reading.dart';
 import '../models/occurrence.dart';
@@ -19,6 +20,7 @@ class NoiseProvider extends ChangeNotifier {
   String? _errorMessage;
   List<Occurrence> _occurrences = [];
   bool _simulandoOffline = false;
+  AlertConfig _alertConfig = AlertConfig.padrao;
 
   // ---- Leitura (as telas usam estes getters) ----
   LoadStatus get status => _status;
@@ -26,6 +28,7 @@ class NoiseProvider extends ChangeNotifier {
   bool get fromCache => _data?.fromCache ?? false;
   DateTime? get updatedAt => _data?.updatedAt;
   bool get simulandoOffline => _simulandoOffline;
+  AlertConfig get alertConfig => _alertConfig;
   List<Region> get regions => _data?.regions ?? const [];
   List<Occurrence> get occurrences => List.unmodifiable(_occurrences);
 
@@ -47,16 +50,18 @@ class NoiseProvider extends ChangeNotifier {
     return null;
   }
 
-    /// Alerta (com justificativa) de uma região.
+  /// Alerta (com justificativa) de uma região.
   Alert? alertOf(String regionId) {
     final regiao = regionById(regionId);
     if (regiao == null) return null;
-    return AlertEngine.analisar(regiao, readingsOf(regionId));
+    return AlertEngine.analisar(regiao, readingsOf(regionId),
+        config: _alertConfig);
   }
 
   /// Alertas de todas as regiões.
   List<Alert> get alerts => [
-        for (final r in regions) AlertEngine.analisar(r, readingsOf(r.id)),
+        for (final r in regions)
+          AlertEngine.analisar(r, readingsOf(r.id), config: _alertConfig),
       ];
 
   // ---- Ações ----
@@ -64,6 +69,7 @@ class NoiseProvider extends ChangeNotifier {
   /// Chamado uma vez na abertura do app.
   Future<void> init() async {
     _occurrences = await _repo.loadOccurrences();
+    _alertConfig = await _repo.loadAlertConfig();
     await refresh();
   }
 
@@ -94,13 +100,20 @@ class NoiseProvider extends ChangeNotifier {
     await refresh();
   }
 
+  /// Muda a sensibilidade dos alertas e salva no aparelho.
+  Future<void> setAlertConfig(AlertConfig config) async {
+    _alertConfig = config;
+    notifyListeners();
+    await _repo.saveAlertConfig(config);
+  }
+
   Future<void> addOccurrence(Occurrence ocorrencia) async {
     _occurrences = [ocorrencia, ..._occurrences];
     notifyListeners();
     await _repo.saveOccurrences(_occurrences);
   }
 
-    Future<void> removeOccurrence(String id) async {
+  Future<void> removeOccurrence(String id) async {
     _occurrences = _occurrences.where((o) => o.id != id).toList();
     notifyListeners();
     await _repo.saveOccurrences(_occurrences);

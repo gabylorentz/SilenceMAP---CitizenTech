@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,12 +29,27 @@ class SilenceMapApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.watch<SettingsProvider>();
+
     return MaterialApp(
       title: 'SilenceMAP',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
+      theme: AppTheme.light(highContrast: s.highContrast),
+      darkTheme: AppTheme.dark(highContrast: s.highContrast),
+      // Também liga sozinho se o sistema operacional pedir alto contraste.
+      highContrastTheme: AppTheme.light(highContrast: true),
+      highContrastDarkTheme: AppTheme.dark(highContrast: true),
+      themeMode: s.themeMode,
+      builder: (context, child) {
+        final mq = MediaQuery.of(context);
+        return MediaQuery(
+          data: mq.copyWith(
+            textScaler:
+                TextScaler.linear(mq.textScaler.scale(1.0) * s.textScale),
+          ),
+          child: child!,
+        );
+      },
       initialRoute: AppRoutes.gate,
       onGenerateRoute: AppRoutes.onGenerateRoute,
     );

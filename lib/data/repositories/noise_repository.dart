@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/alert_config.dart';
 import '../../models/noise_data.dart';
 import '../../models/occurrence.dart';
 import '../services/mock_noise_api_service.dart';
@@ -10,6 +11,8 @@ import '../services/mock_noise_api_service.dart';
 class NoiseRepository {
   static const _cacheKey = 'silencemap_noise_cache_v1';
   static const _occurrencesKey = 'silencemap_occurrences_v1';
+  static const _slopeKey = 'silencemap_alert_slope_v1';
+  static const _horizonKey = 'silencemap_alert_horizon_v1';
 
   final MockNoiseApiService api;
   NoiseRepository(this.api);
@@ -65,5 +68,28 @@ class NoiseRepository {
       _occurrencesKey,
       jsonEncode(lista.map((o) => o.toJson()).toList()),
     );
+  }
+
+  // ---- Sensibilidade dos alertas (preferência do usuário) ----
+
+  Future<AlertConfig> loadAlertConfig() async {
+    final prefs = await SharedPreferences.getInstance();
+    final inclinacao = prefs.getDouble(_slopeKey);
+    final horizonte = prefs.getInt(_horizonKey);
+    // Valores fora das opções permitidas voltam para o padrão.
+    return AlertConfig(
+      inclinacaoMinima: AlertConfig.inclinacoes.contains(inclinacao)
+          ? inclinacao!
+          : AlertConfig.padrao.inclinacaoMinima,
+      horizonteDias: AlertConfig.horizontes.contains(horizonte)
+          ? horizonte!
+          : AlertConfig.padrao.horizonteDias,
+    );
+  }
+
+  Future<void> saveAlertConfig(AlertConfig config) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble(_slopeKey, config.inclinacaoMinima);
+    await prefs.setInt(_horizonKey, config.horizonteDias);
   }
 }

@@ -41,11 +41,25 @@ class SourcesDashboard extends StatelessWidget {
 
     final text = Theme.of(context).textTheme;
 
+    // Descrições dos gráficos para leitores de tela.
+    final partesPizza = fontes
+        .map((f) => '${f.key.rotulo} ${(f.value * 100 / total).round()}%')
+        .join(', ');
+    final descricaoPizza =
+        'Gráfico de pizza com as fontes de ruído: $partesPizza.';
+
+    final partesBarras = horas
+        .map((h) => '${h}h ${porHora[h]!.toStringAsFixed(0)} dB')
+        .join(', ');
+    final descricaoBarras =
+        'Gráfico de barras com a média de dB por horário: $partesBarras.';
+
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
       children: [
         SectionCard(
           title: 'Fontes de ruído',
+          semanticsLabel: descricaoPizza,
           subtitle: 'Fonte predominante em cada leitura, todas as regiões.',
           child: Column(
             children: [
@@ -102,6 +116,7 @@ class SourcesDashboard extends StatelessWidget {
         const SizedBox(height: 12),
         SectionCard(
           title: 'Ruído por horário do dia',
+          semanticsLabel: descricaoBarras,
           subtitle:
               'Média de dB em todas as regiões. Pico às ${horaPico}h, '
               '${porHora[horaPico]!.toStringAsFixed(1)} dB.',

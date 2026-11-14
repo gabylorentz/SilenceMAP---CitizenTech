@@ -37,7 +37,15 @@ class ImpactDashboard extends StatelessWidget {
     final porReclamacao = [...regioes]
       ..sort((a, b) => p.reclamacoesOf(b).compareTo(p.reclamacoesOf(a)));
     final maxReclamacoes = p.reclamacoesOf(porReclamacao.first);
+
     final text = Theme.of(context).textTheme;
+
+    // Descrição do gráfico para leitores de tela.
+    final partesReclamacoes = porReclamacao
+        .map((r) => '${r.nome} ${p.reclamacoesOf(r)}')
+        .join(', ');
+    final descricaoReclamacoes =
+        'Gráfico de barras com as reclamações por região: $partesReclamacoes.';
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
@@ -112,7 +120,9 @@ class ImpactDashboard extends StatelessWidget {
         const SizedBox(height: 12),
         SectionCard(
           title: 'Reclamações por região',
-          subtitle: 'Registros no último mês (dados sintéticos).',
+          semanticsLabel: descricaoReclamacoes,
+          subtitle:
+              'Dados sintéticos do mês + ocorrências registradas neste aparelho.',
           child: SizedBox(
             height: 220,
             child: BarChart(

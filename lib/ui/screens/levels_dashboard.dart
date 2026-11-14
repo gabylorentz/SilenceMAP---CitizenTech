@@ -31,7 +31,7 @@ class _LevelsDashboardState extends State<LevelsDashboard> {
 
     final regiao = p.regionById(_regionId ?? '') ?? p.regions.first;
     final pontos =
-    NoiseStats.mediaDiariaDiurna(p.readingsOf(regiao.id), minLeituras: 5);
+        NoiseStats.mediaDiariaDiurna(p.readingsOf(regiao.id), minLeituras: 5);
     if (pontos.isEmpty) {
       return const EmptyView(message: 'Sem leituras para esta região.');
     }
@@ -51,6 +51,13 @@ class _LevelsDashboardState extends State<LevelsDashboard> {
     final text = Theme.of(context).textTheme;
     final corLinha = Theme.of(context).colorScheme.primary;
 
+    // Descrição do gráfico para leitores de tela.
+    final descricaoGrafico =
+        'Gráfico de linha de ${regiao.nome}. '
+        'Média mais recente de ${atual.toStringAsFixed(1)} dB, '
+        'variação de ${variacao.toStringAsFixed(1)} dB em ${pontos.length} dias, '
+        'limite de ${limite.toStringAsFixed(0)} dB.';
+
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
       children: [
@@ -69,6 +76,7 @@ class _LevelsDashboardState extends State<LevelsDashboard> {
         const SizedBox(height: 16),
         SectionCard(
           title: 'Média diária de ruído: ${regiao.nome}',
+          semanticsLabel: descricaoGrafico,
           subtitle:
               'Leituras diurnas (7h às 22h) dos últimos ${pontos.length} dias. '
               'Linha tracejada = limite de ${limite.toStringAsFixed(0)} dB.',

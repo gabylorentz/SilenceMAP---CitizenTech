@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../models/alert_config.dart';
 import '../models/noise_reading.dart';
 import '../models/region.dart';
 import 'noise_level.dart';
@@ -67,9 +68,11 @@ class AlertEngine {
 
   static const diasMinimos = 7;
   static const leiturasPorDia = 5; // 7h, 10h, 13h, 16h e 19h
-  static const inclinacaoMinima = 0.1; // dB por dia
   static const r2Minimo = 0.4;
   static const r2Alto = 0.7;
+
+  // Valores padrão. O usuário pode mudar em Configurações (ver AlertConfig).
+  static const inclinacaoMinima = 0.1; // dB por dia
   static const horizonteDias = 14;
 
   /// Formata número com vírgula (padrão brasileiro).
@@ -79,7 +82,11 @@ class AlertEngine {
   static String fmtSinal(double v, [int casas = 2]) =>
       v >= 0 ? '+${fmt(v, casas)}' : fmt(v, casas);
 
-  static Alert analisar(Region regiao, List<NoiseReading> leituras) {
+  static Alert analisar(
+    Region regiao,
+    List<NoiseReading> leituras, {
+    AlertConfig config = AlertConfig.padrao,
+  }) {
     final limite = regiao.zona.limiteDiurno;
     final pontos = NoiseStats.mediaDiariaDiurna(
       leituras,
@@ -122,10 +129,11 @@ class AlertEngine {
     if (excesso > 0) {
       kind = AlertKind.excedido;
       nivel = excesso > 5 ? NoiseLevel.critico : NoiseLevel.alerta;
-    } else if (reg.inclinacao >= inclinacaoMinima && reg.r2 >= r2Minimo) {
+    } else if (reg.inclinacao >= config.inclinacaoMinima &&
+        reg.r2 >= r2Minimo) {
       final previsto =
           max(1, ((limite - ajustadoHoje) / reg.inclinacao).ceil());
-      if (previsto <= horizonteDias) {
+      if (previsto <= config.horizonteDias) {
         kind = AlertKind.preventivo;
         nivel = NoiseLevel.atencao;
         dias = previsto;
@@ -149,7 +157,7 @@ class AlertEngine {
       titulo = 'Sem alerta';
       resumo = altaDistante
           ? 'Há tendência de alta, mas o limite só seria atingido em mais de '
-              '$horizonteDias dias.'
+              '${config.horizonteDias} dias.'
           : 'Média de ${fmt(atual)} dB, ${fmt(-excesso)} dB abaixo do limite de '
               '${fmt(limite, 0)} dB, sem tendência de alta relevante.';
     }

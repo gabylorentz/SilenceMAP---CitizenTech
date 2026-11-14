@@ -98,7 +98,6 @@ class _Loaded extends StatelessWidget {
     );
   }
 }
-
 class _RegionCard extends StatelessWidget {
   final Alert alerta;
   const _RegionCard({required this.alerta});
@@ -106,53 +105,65 @@ class _RegionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
-
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () => Navigator.pushNamed(
+    void abrir() => Navigator.pushNamed(
           context,
           AppRoutes.alertDetail,
           arguments: alerta.regiao.id,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        );
+    final media = alerta.mediaAtual == null
+        ? 'sem média disponível'
+        : 'média de ${AlertEngine.fmt(alerta.mediaAtual!)} decibéis';
+
+    return Semantics(
+      button: true,
+      excludeSemantics: true,
+      onTap: abrir,
+      label: '${alerta.regiao.nome}. ${alerta.regiao.zona.rotulo}. '
+          'Nível ${alerta.nivel.rotulo}: ${alerta.titulo}, $media. '
+          'Toque para ver a justificativa.',
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: abrir,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(alerta.regiao.nome,
+                          style: text.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 2),
+                      Text(alerta.regiao.zona.rotulo, style: text.bodySmall),
+                      const SizedBox(height: 2),
+                      Text(alerta.titulo,
+                          style: text.bodySmall
+                              ?.copyWith(fontWeight: FontWeight.w600)),
+                    ],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(alerta.regiao.nome,
-                        style: text.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 2),
-                    Text(alerta.regiao.zona.rotulo, style: text.bodySmall),
-                    const SizedBox(height: 2),
-                    Text(alerta.titulo,
-                        style: text.bodySmall
-                            ?.copyWith(fontWeight: FontWeight.w600)),
+                    Text(
+                      alerta.mediaAtual == null
+                          ? '-'
+                          : '${AlertEngine.fmt(alerta.mediaAtual!)} dB',
+                      style: text.titleMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 4),
+                    LevelBadge(
+                        label: alerta.nivel.rotulo, color: alerta.nivel.cor),
                   ],
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    alerta.mediaAtual == null
-                        ? '-'
-                        : '${AlertEngine.fmt(alerta.mediaAtual!)} dB',
-                    style: text.titleMedium
-                        ?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 4),
-                  LevelBadge(
-                      label: alerta.nivel.rotulo, color: alerta.nivel.cor),
-                ],
-              ),
-              const SizedBox(width: 4),
-              const Icon(Icons.chevron_right),
-            ],
+                const SizedBox(width: 4),
+                const Icon(Icons.chevron_right),
+              ],
+            ),
           ),
         ),
       ),

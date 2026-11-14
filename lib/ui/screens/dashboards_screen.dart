@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/noise_provider.dart';
+import '../widgets/state_views.dart';
+import 'impact_dashboard.dart';
+import 'levels_dashboard.dart';
+import 'sources_dashboard.dart';
 
 class DashboardsScreen extends StatelessWidget {
   const DashboardsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final p = context.watch<NoiseProvider>();
+
+    if (p.status == LoadStatus.loading) return const LoadingView();
+    if (p.status == LoadStatus.error) {
+      return ErrorView(
+        message: p.errorMessage ?? 'Erro desconhecido.',
+        onRetry: p.refresh,
+      );
+    }
+
     return const DefaultTabController(
       length: 3,
       child: Column(
@@ -19,51 +36,13 @@ class DashboardsScreen extends StatelessWidget {
           Expanded(
             child: TabBarView(
               children: [
-                _Placeholder(
-                  titulo: 'Níveis de ruído',
-                  descricao: 'Gráfico de dB por região ao longo do tempo.',
-                ),
-                _Placeholder(
-                  titulo: 'Horários e fontes',
-                  descricao: 'Trânsito, obras e eventos por período do dia.',
-                ),
-                _Placeholder(
-                  titulo: 'Impacto social',
-                  descricao: 'Escolas e hospitais expostos e reclamações.',
-                ),
+                LevelsDashboard(),
+                SourcesDashboard(),
+                ImpactDashboard(),
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _Placeholder extends StatelessWidget {
-  final String titulo;
-  final String descricao;
-  const _Placeholder({required this.titulo, required this.descricao});
-
-  @override
-  Widget build(BuildContext context) {
-    final text = Theme.of(context).textTheme;
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.construction, size: 48),
-            const SizedBox(height: 12),
-            Text(titulo,
-                style: text.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 4),
-            Text(descricao, textAlign: TextAlign.center),
-            const SizedBox(height: 4),
-            Text('Em construção (etapa 6)', style: text.bodySmall),
-          ],
-        ),
       ),
     );
   }

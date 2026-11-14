@@ -30,14 +30,13 @@ class ImpactDashboard extends StatelessWidget {
 
     final escolas = expostas.fold<int>(0, (s, a) => s + a.regiao.escolas);
     final hospitais = expostas.fold<int>(0, (s, a) => s + a.regiao.hospitais);
-    final reclamacoes = regioes.fold<int>(0, (s, r) => s + r.reclamacoesMes);
+    final reclamacoes = regioes.fold<int>(0, (s, r) => s + p.reclamacoesOf(r));
     final locaisProtegidos =
         protegidas.fold<int>(0, (s, a) => s + a.regiao.locaisSensiveis);
 
     final porReclamacao = [...regioes]
-      ..sort((a, b) => b.reclamacoesMes.compareTo(a.reclamacoesMes));
-    final maxReclamacoes = porReclamacao.first.reclamacoesMes;
-
+      ..sort((a, b) => p.reclamacoesOf(b).compareTo(p.reclamacoesOf(a)));
+    final maxReclamacoes = p.reclamacoesOf(porReclamacao.first);
     final text = Theme.of(context).textTheme;
 
     return ListView(
@@ -163,7 +162,7 @@ class ImpactDashboard extends StatelessWidget {
                       x: i,
                       barRods: [
                         BarChartRodData(
-                          toY: porReclamacao[i].reclamacoesMes.toDouble(),
+                          toY: p.reclamacoesOf(porReclamacao[i]).toDouble(),
                           width: 20,
                           borderRadius: BorderRadius.circular(4),
                           color: AppColors.alerta,

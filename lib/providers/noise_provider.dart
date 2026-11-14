@@ -99,4 +99,21 @@ class NoiseProvider extends ChangeNotifier {
     notifyListeners();
     await _repo.saveOccurrences(_occurrences);
   }
+
+    Future<void> removeOccurrence(String id) async {
+    _occurrences = _occurrences.where((o) => o.id != id).toList();
+    notifyListeners();
+    await _repo.saveOccurrences(_occurrences);
+  }
+
+  Future<void> clearOccurrences() async {
+    _occurrences = [];
+    notifyListeners();
+    await _repo.saveOccurrences(_occurrences);
+  }
+
+  /// Reclamações da região: dados sintéticos do mês + ocorrências registradas aqui.
+  int reclamacoesOf(Region regiao) =>
+      regiao.reclamacoesMes +
+      _occurrences.where((o) => o.regionId == regiao.id).length;
 }

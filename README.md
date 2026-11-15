@@ -10,6 +10,22 @@ App mobile em Flutter que identifica regiões com tendência de aumento de ruíd
 
 </div>
 
+A logo resume a ideia do app em um único símbolo, com três elementos:
+
+| Elemento | O que representa |
+|---|---|
+| **Pino de localização** | O **território**: o "MAP" do nome. O SilenceMAP olha para bairros e regiões, e não para o ruído em geral |
+| **Ondas sonoras** | O **ruído urbano** que se espalha a partir de um ponto e afeta quem está em volta |
+| **Linha reta no fim das ondas** | O **silêncio**: um sinal sem oscilação, que é o objetivo do projeto. Também lembra a linha de tendência que o app calcula |
+
+Lida da esquerda para a direita, a logo conta a história do app: **um lugar, o ruído que se propaga a partir dele e o silêncio que se busca alcançar**. Como o SilenceMAP antecipa o problema, a imagem também sugere que dá para agir antes que as ondas cresçam.
+
+**Cores.** O verde-acinzentado (`#3F574D`) transmite calma e cuidado com a saúde e o bem-estar, e o off-white (`#ECE7DF`) dá o contraste do símbolo. Elas são as mesmas do tema do app, o que mantém a identidade visual consistente da primeira tela às configurações.
+
+**Onde aparece.** Na primeira tela (Justificativa), na tela de Consentimento e na capa deste README.
+
+**Origem.** A logo foi criada com apoio de uma ferramenta de IA generativa (Microsoft Copilot) a partir de uma descrição feita pelos autores.
+
 ---
 
 ## 1. Problema e público
@@ -45,6 +61,7 @@ App mobile em Flutter que identifica regiões com tendência de aumento de ruíd
 ## 4. Funcionalidades
 
 - [x] 7 telas com navegação por rotas nomeadas: Justificativa, Consentimento, Visão geral, Dashboards, Detalhe do alerta, Registrar ruído e Configurações
+- [x] Identidade visual própria e consistente: logo, fundo em degradê suave, cartões translúcidos, botões em pílula e navegação flutuante, definidos em um tema único e componentes reutilizáveis
 - [x] 3 dashboards: Níveis de ruído, Horários e fontes, Impacto social
 - [x] Alertas gerados a partir dos dados, com justificativa, evidências, nível de confiança e limitações
 - [x] Aviso visível de que o alerta apoia, mas não substitui, a decisão humana
@@ -118,6 +135,7 @@ Média móvel de 3 dias (dB), inclinação da reta (dB/dia), R², projeção de 
 
 ### Acessibilidade
 - **Contraste:** o texto do app tem contraste muito acima de 4,5:1 sobre o degradê. As etiquetas de nível ajustam a cor do texto para atingir pelo menos 4,5:1 em qualquer tema, e os ícones coloridos ajustam a cor para pelo menos 3:1 (verificado por teste automatizado).
+- **Leitores de tela:** a logo tem descrição em texto, os cartões de região são lidos como botão, os títulos são marcados como cabeçalho e cada gráfico tem uma descrição em texto.
 - **Cor não é o único sinal:** cada situação da região tem também um ícone e um texto próprios.
 - **Alto contraste:** fundo liso, cores e bordas mais fortes. Também liga sozinho se o sistema operacional pedir.
 - **Tema claro, escuro ou do sistema.**

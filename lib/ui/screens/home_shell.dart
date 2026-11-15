@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/routes/app_routes.dart';
+import '../../core/theme/glass_style.dart';
 import 'dashboards_screen.dart';
 import 'overview_screen.dart';
 
@@ -17,6 +18,9 @@ class _HomeShellState extends State<HomeShell> {
 
   @override
   Widget build(BuildContext context) {
+    final estilo = Theme.of(context).extension<GlassStyle>();
+    final raio = BorderRadius.circular(32);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(_titulos[_indice]),
@@ -37,21 +41,35 @@ class _HomeShellState extends State<HomeShell> {
         icon: const Icon(Icons.edit_location_alt),
         label: const Text('Registrar ruído'),
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _indice,
-        onDestinationSelected: (i) => setState(() => _indice = i),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.map_outlined),
-            selectedIcon: Icon(Icons.map),
-            label: 'Visão geral',
+      bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: estilo?.card,
+            borderRadius: raio,
+            border: Border.all(color: estilo?.cardBorder ?? Colors.transparent),
           ),
-          NavigationDestination(
-            icon: Icon(Icons.bar_chart_outlined),
-            selectedIcon: Icon(Icons.bar_chart),
-            label: 'Dashboards',
+          child: ClipRRect(
+            borderRadius: raio,
+            child: NavigationBar(
+              selectedIndex: _indice,
+              onDestinationSelected: (i) => setState(() => _indice = i),
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+              destinations: const [
+                NavigationDestination(
+                  icon: Icon(Icons.map_outlined),
+                  selectedIcon: Icon(Icons.map),
+                  label: 'Visão geral',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.bar_chart_outlined),
+                  selectedIcon: Icon(Icons.bar_chart),
+                  label: 'Dashboards',
+                ),
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }

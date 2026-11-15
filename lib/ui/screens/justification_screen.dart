@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/app_colors.dart';
 import '../widgets/section_card.dart';
 
 /// Primeira tela do app: explica por que o SilenceMAP existe.
@@ -10,6 +9,7 @@ class JustificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cores = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
 
     return Scaffold(
@@ -18,20 +18,40 @@ class JustificationScreen extends StatelessWidget {
           children: [
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.fromLTRB(24, 32, 24, 16),
                 children: [
-                  const Icon(Icons.graphic_eq,
-                      size: 56, color: AppColors.primary),
-                  const SizedBox(height: 12),
-                  Text('SilenceMAP',
-                      style: text.headlineMedium
-                          ?.copyWith(fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: cores.primary.withValues(alpha: 0.16),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.graphic_eq, color: cores.primary),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        'SilenceMAP',
+                        style: text.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 40),
                   Text(
                     'Antecipando o impacto da poluição sonora nos territórios urbanos.',
+                    style: text.headlineLarge,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Veja onde o ruído está subindo antes que ele atinja níveis críticos.',
                     style: text.bodyLarge,
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 32),
                   const SectionCard(
                     title: 'O problema',
                     child: Text(
@@ -96,10 +116,17 @@ class JustificationScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
               child: FilledButton(
                 onPressed: onContinue,
-                child: const Text('Continuar'),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Continuar'),
+                    SizedBox(width: 8),
+                    Icon(Icons.arrow_forward, size: 20),
+                  ],
+                ),
               ),
             ),
           ],

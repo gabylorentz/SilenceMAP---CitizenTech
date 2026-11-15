@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/glass_style.dart';
 
 class LevelBadge extends StatelessWidget {
   final String label;
@@ -12,7 +13,7 @@ class LevelBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final tema = Theme.of(context);
     final superficie =
-        tema.cardTheme.color ?? tema.colorScheme.surfaceContainerLow;
+        tema.extension<GlassStyle>()?.cardOpaque ?? tema.colorScheme.surface;
     final fundo = Color.alphaBlend(color.withValues(alpha: 0.15), superficie);
     // Texto e borda ajustados para ter contraste legível em qualquer tema.
     final corTexto = AppColors.legivel(color, fundo);

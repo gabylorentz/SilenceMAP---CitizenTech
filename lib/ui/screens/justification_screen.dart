@@ -23,7 +23,7 @@ class JustificationScreen extends StatelessWidget {
                   Row(
                     children: [
                       Image.asset(
-                      'assets/images/logo.png',
+                        'assets/screenshots/logo.png',
                         width: 88,
                         height: 88,
                         fit: BoxFit.contain,

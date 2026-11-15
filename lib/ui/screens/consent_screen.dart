@@ -25,44 +25,82 @@ class _ConsentScreenState extends State<ConsentScreen> {
           children: [
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
                 children: [
-                  Icon(Icons.graphic_eq, size: 56, color: cores.primary),
-                  const SizedBox(height: 12),
-                  Text('SilenceMAP',
-                      style: text.headlineMedium
-                          ?.copyWith(fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Image.asset(
+                        'assets/screenshots/logo.png',
+                        width: 88,
+                        height: 88,
+                        fit: BoxFit.contain,
+                        semanticLabel: 'Logo do SilenceMAP',
+                        errorBuilder: (context, erro, pilha) => SizedBox(
+                          width: 88,
+                          height: 88,
+                          child: Icon(Icons.graphic_eq,
+                              size: 48, color: cores.primary),
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'SilenceMAP',
+                        style: text.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 28),
                   Text(
-                    'Antecipando o impacto da poluição sonora nos territórios urbanos.',
+                    'Sua privacidade em primeiro lugar.',
+                    style: text.headlineLarge,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Antes de começar, veja como o SilenceMAP trata os seus dados.',
                     style: text.bodyLarge,
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 32),
                   const SectionCard(
                     title: 'Seus dados e sua privacidade',
                     child: Column(
                       children: [
                         _Item('Não pedimos nome, e-mail nem telefone.'),
-                        _Item('As ocorrências que você registrar ficam salvas só neste aparelho.'),
-                        _Item('A localização é informada apenas por bairro, nunca o endereço exato.'),
-                        _Item('Os dados de ruído deste app são sintéticos, feitos para demonstração.'),
-                        _Item('Você pode revogar o consentimento a qualquer momento em Configurações.'),
+                        _Item(
+                            'As ocorrências que você registrar ficam salvas só neste aparelho.'),
+                        _Item(
+                            'A localização é informada apenas por bairro, nunca o endereço exato.'),
+                        _Item(
+                            'Os dados de ruído deste app são sintéticos, feitos para demonstração.'),
+                        _Item(
+                            'Você pode revogar o consentimento a qualquer momento em Configurações.'),
                       ],
                     ),
                   ),
                   const SizedBox(height: 12),
                   const SectionCard(
                     title: 'Como usar os alertas',
-                    child: Text(
-                      'Os alertas são um apoio à decisão e mostram a justificativa. '
-                      'A decisão final é sempre humana.',
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(Icons.person_outline),
+                        SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            'Os alertas são um apoio à decisão e mostram a '
+                            'justificativa. A decisão final é sempre humana.',
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
               child: Column(
                 children: [
                   CheckboxListTile(
@@ -70,13 +108,22 @@ class _ConsentScreenState extends State<ConsentScreen> {
                     controlAffinity: ListTileControlAffinity.leading,
                     value: _aceito,
                     onChanged: (v) => setState(() => _aceito = v ?? false),
-                    title: const Text('Li e concordo com o uso dos meus dados como descrito acima.'),
+                    title: const Text(
+                        'Li e concordo com o uso dos meus dados como descrito acima.'),
                   ),
+                  const SizedBox(height: 8),
                   FilledButton(
                     onPressed: _aceito
                         ? () => context.read<SettingsProvider>().acceptConsent()
                         : null,
-                    child: const Text('Aceitar e continuar'),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Aceitar e continuar'),
+                        SizedBox(width: 8),
+                        Icon(Icons.arrow_forward, size: 20),
+                      ],
+                    ),
                   ),
                 ],
               ),

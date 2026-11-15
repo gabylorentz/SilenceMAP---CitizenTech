@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/screenshots/01_justificativa.png" alt="SilenceMAP" width="200">
+<img src="assets/screenshots/logo.png" alt="SilenceMAP" width="200">
 
 # SilenceMAP
 

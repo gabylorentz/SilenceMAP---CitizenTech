@@ -18,30 +18,34 @@ class JustificationScreen extends StatelessWidget {
           children: [
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.fromLTRB(24, 32, 24, 16),
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
                 children: [
                   Row(
                     children: [
-                      Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          color: cores.primary.withValues(alpha: 0.16),
-                          shape: BoxShape.circle,
+                      Image.asset(
+                      'assets/images/logo.png',
+                        width: 88,
+                        height: 88,
+                        fit: BoxFit.contain,
+                        semanticLabel: 'Logo do SilenceMAP',
+                        errorBuilder: (context, erro, pilha) => SizedBox(
+                          width: 88,
+                          height: 88,
+                          child: Icon(Icons.graphic_eq,
+                              size: 48, color: cores.primary),
                         ),
-                        child: Icon(Icons.graphic_eq, color: cores.primary),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 4),
                       Text(
                         'SilenceMAP',
-                        style: text.titleMedium?.copyWith(
+                        style: text.titleLarge?.copyWith(
                           fontWeight: FontWeight.w600,
                           letterSpacing: 1.0,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 28),
                   Text(
                     'Antecipando o impacto da poluição sonora nos territórios urbanos.',
                     style: text.headlineLarge,

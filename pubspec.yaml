@@ -92,3 +92,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/screenshots/

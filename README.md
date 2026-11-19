@@ -32,25 +32,17 @@ O **SilenceMAP** propõe uma abordagem preventiva: analisar dados de ruído por 
 | Gabrielly Sousa Lorentz | 565806 |
 | Maria Eduarda de Oliveira Silva Luiz | 565386 |
 
+
 ## 3. Demonstração visual
 
-As imagens abaixo apresentam as principais telas e funcionalidades implementadas no aplicativo.
+| | | |
+|:---:|:---:|:---:|
+| <img src="assets/screenshots/01_justificativa.png" width="200"><br>**Justificativa:** primeira tela, explica o problema e o público | <img src="assets/screenshots/02_consentimento.png" width="200"><br>**Consentimento:** privacidade e aceite explícito | <img src="assets/screenshots/03_visao_geral.png" width="200"><br>**Visão geral:** resumo do dia e regiões ordenadas por gravidade |
+| <img src="assets/screenshots/04_dashboard_niveis.png" width="200"><br>**Dashboard Níveis:** média diária e limite da norma | <img src="assets/screenshots/05_dashboard_fontes.png" width="200"><br>**Dashboard Fontes:** fontes e horários de pico | <img src="assets/screenshots/06_dashboard_impacto.png" width="200"><br>**Dashboard Impacto:** escolas, hospitais e reclamações |
+| <img src="assets/screenshots/07_detalhe_alerta.png" width="200"><br>**Detalhe do alerta:** justificativa, evidências, confiança e limitações | <img src="assets/screenshots/08_formulario_erros.png" width="200"><br>**Formulário:** validação com feedback de erro | <img src="assets/screenshots/09_formulario_preenchido.png" width="200"><br>**Minhas ocorrências:** registro anônimo salvo no aparelho |
+| <img src="assets/screenshots/10_configuracoes.png" width="200"><br>**Configurações:** acessibilidade, sensibilidade e privacidade | <img src="assets/screenshots/11_tema_escuro.png" width="200"><br>**Tema escuro** | <img src="assets/screenshots/12_alto_contraste.png" width="200"><br>**Alto contraste** |
+| <img src="assets/screenshots/13_modo_offline.png" width="200"><br>**Modo offline:** dados salvos quando não há conexão | | |
 
-| Tela | Demonstração |
-|---|---|
-| Justificativa | ![Justificativa](assets/screenshots/01_justificativa.png) |
-| Consentimento | ![Consentimento](assets/screenshots/02_consentimento.png) |
-| Visão geral | ![Visão geral](assets/screenshots/03_visao_geral.png) |
-| Dashboard de níveis | ![Dashboard de níveis](assets/screenshots/04_dashboard_niveis.png) |
-| Dashboard de fontes | ![Dashboard de fontes](assets/screenshots/05_dashboard_fontes.png) |
-| Dashboard de impacto | ![Dashboard de impacto](assets/screenshots/06_dashboard_impacto.png) |
-| Detalhe do alerta | ![Detalhe do alerta](assets/screenshots/07_detalhe_alerta.png) |
-| Formulário com erros | ![Formulário com erros](assets/screenshots/08_formulario_erros.png) |
-| Formulário preenchido | ![Formulário preenchido](assets/screenshots/09_formulario_preenchido.png) |
-| Configurações | ![Configurações](assets/screenshots/10_configuracoes.png) |
-| Tema escuro | ![Tema escuro](assets/screenshots/11_tema_escuro.png) |
-| Alto contraste | ![Alto contraste](assets/screenshots/12_alto_contraste.png) |
-| Modo offline | ![Modo offline](assets/screenshots/13_modo_offline.png) |
 
 ## 4. Funcionalidades
 

@@ -1,208 +1,338 @@
-<div align="center">
-
-<img src="assets/screenshots/logo.png" alt="SilenceMAP" width="200">
 
 # SilenceMAP
 
 **Antecipando o impacto da poluição sonora nos territórios urbanos.**
 
-App mobile em Flutter que identifica regiões com tendência de aumento de ruído urbano antes que o problema se instale, e explica cada alerta com justificativa, nível de confiança e limitações.
+Aplicativo mobile desenvolvido em Flutter para monitorar indicadores de ruído urbano, analisar tendências e gerar alertas preventivos por região. A solução apresenta evidências, nível de confiança e limitações das previsões, apoiando decisões voltadas à qualidade de vida da população.
 
+<div align="center">
+  <img src="assets/screenshots/logo.png" alt="Logo SilenceMAP" width="200">
 </div>
-
-A logo resume a ideia do app em um único símbolo, com três elementos:
-
-| Elemento | O que representa |
-|---|---|
-| **Pino de localização** | O **território**: o "MAP" do nome. O SilenceMAP olha para bairros e regiões, e não para o ruído em geral |
-| **Ondas sonoras** | O **ruído urbano** que se espalha a partir de um ponto e afeta quem está em volta |
-| **Linha reta no fim das ondas** | O **silêncio**: um sinal sem oscilação, que é o objetivo do projeto. Também lembra a linha de tendência que o app calcula |
-
-Lida da esquerda para a direita, a logo conta a história do app: **um lugar, o ruído que se propaga a partir dele e o silêncio que se busca alcançar**. Como o SilenceMAP antecipa o problema, a imagem também sugere que dá para agir antes que as ondas cresçam.
-
-**Cores.** O verde-acinzentado (`#3F574D`) transmite calma e cuidado com a saúde e o bem-estar, e o off-white (`#ECE7DF`) dá o contraste do símbolo. Elas são as mesmas do tema do app, o que mantém a identidade visual consistente da primeira tela às configurações.
-
-**Onde aparece.** Na primeira tela (Justificativa), na tela de Consentimento e na capa deste README.
-
-**Origem.** A logo foi criada com apoio de uma ferramenta de IA generativa (Microsoft Copilot) a partir de uma descrição feita pelos autores.
-
----
 
 ## 1. Problema e público
 
-**Problema.** A poluição sonora afeta a qualidade de vida, o sono, a produtividade e a saúde mental da população. Hoje, as ações acontecem apenas depois de reclamações ou quando o problema já está instalado. O SilenceMAP busca antecipar regiões com tendência de aumento do ruído urbano.
+A poluição sonora é um problema urbano que pode afetar a qualidade do sono, a saúde, a concentração e o bem-estar da população. Muitas vezes, as ações de prevenção acontecem somente depois de reclamações ou quando o problema já está instalado.
 
-**Público.**
-- Moradores
-- Trabalhadores remotos
-- Escolas
-- Hospitais
-- Gestores públicos
+O **SilenceMAP** propõe uma abordagem preventiva: analisar dados de ruído por região, identificar tendências de aumento e apresentar alertas que auxiliem no planejamento de ações públicas.
 
-**Impacto social esperado.** Identificar áreas com tendência de aumento de ruído antes que atinjam níveis críticos, apoiando decisões preventivas e melhorando a qualidade de vida da população. O app mostra o indicador **"Protegidos por alerta antecipado"**: quantas escolas e hospitais estão em regiões com tendência de alta, ainda abaixo do limite.
+**Público beneficiado:**
+- Moradores de regiões urbanas;
+- Trabalhadores e pessoas que estudam em áreas com exposição ao ruído;
+- Escolas e hospitais;
+- Gestores públicos e responsáveis pelo planejamento urbano.
+
+**Objetivo:** transformar dados de ruído em informações compreensíveis, permitindo identificar regiões que podem atingir níveis elevados de poluição sonora.
+
+**Impacto social esperado:** contribuir para ações preventivas, proteção de áreas sensíveis e melhoria da qualidade de vida. O aplicativo apresenta o indicador **“Protegidos por alerta antecipado”**, que contabiliza escolas e hospitais localizados em regiões com tendência de aumento do ruído, ainda abaixo do limite de referência.
 
 ## 2. Integrantes
 
 | Nome completo | RM |
 |---|---|
-| [Gabrielly Sousa Lorentz] | [565806] |
-| [Maria Eduarda de Oliveira Silva Luiz ] | [565386] |
+| Gabrielly Sousa Lorentz | 565806 |
+| Maria Eduarda de Oliveira Silva Luiz | 565386 |
 
 ## 3. Demonstração visual
 
-| | | |
-|:---:|:---:|:---:|
-| <img src="assets/screenshots/01_justificativa.png" width="200"><br>**Justificativa:** primeira tela, explica o problema e o público | <img src="assets/screenshots/02_consentimento.png" width="200"><br>**Consentimento:** privacidade e aceite explícito | <img src="assets/screenshots/03_visao_geral.png" width="200"><br>**Visão geral:** resumo do dia e regiões ordenadas por gravidade |
-| <img src="assets/screenshots/04_dashboard_niveis.png" width="200"><br>**Dashboard Níveis:** média diária e limite da norma | <img src="assets/screenshots/05_dashboard_fontes.png" width="200"><br>**Dashboard Fontes:** fontes e horários de pico | <img src="assets/screenshots/06_dashboard_impacto.png" width="200"><br>**Dashboard Impacto:** escolas, hospitais e reclamações |
-| <img src="assets/screenshots/07_detalhe_alerta.png" width="200"><br>**Detalhe do alerta:** justificativa, evidências, confiança e limitações | <img src="assets/screenshots/08_formulario_erros.png" width="200"><br>**Formulário:** validação com feedback de erro | <img src="assets/screenshots/09_formulario_preenchido.png" width="200"><br>**Minhas ocorrências:** registro anônimo salvo no aparelho |
-| <img src="assets/screenshots/10_configuracoes.png" width="200"><br>**Configurações:** acessibilidade, sensibilidade e privacidade | <img src="assets/screenshots/11_tema_escuro.png" width="200"><br>**Tema escuro** | <img src="assets/screenshots/12_alto_contraste.png" width="200"><br>**Alto contraste** |
-| <img src="assets/screenshots/13_modo_offline.png" width="200"><br>**Modo offline:** dados salvos quando não há conexão | | |
+As imagens abaixo apresentam as principais telas e funcionalidades implementadas no aplicativo.
+
+| Tela | Demonstração |
+|---|---|
+| Justificativa | ![Justificativa](assets/screenshots/01_justificativa.png) |
+| Consentimento | ![Consentimento](assets/screenshots/02_consentimento.png) |
+| Visão geral | ![Visão geral](assets/screenshots/03_visao_geral.png) |
+| Dashboard de níveis | ![Dashboard de níveis](assets/screenshots/04_dashboard_niveis.png) |
+| Dashboard de fontes | ![Dashboard de fontes](assets/screenshots/05_dashboard_fontes.png) |
+| Dashboard de impacto | ![Dashboard de impacto](assets/screenshots/06_dashboard_impacto.png) |
+| Detalhe do alerta | ![Detalhe do alerta](assets/screenshots/07_detalhe_alerta.png) |
+| Formulário com erros | ![Formulário com erros](assets/screenshots/08_formulario_erros.png) |
+| Formulário preenchido | ![Formulário preenchido](assets/screenshots/09_formulario_preenchido.png) |
+| Configurações | ![Configurações](assets/screenshots/10_configuracoes.png) |
+| Tema escuro | ![Tema escuro](assets/screenshots/11_tema_escuro.png) |
+| Alto contraste | ![Alto contraste](assets/screenshots/12_alto_contraste.png) |
+| Modo offline | ![Modo offline](assets/screenshots/13_modo_offline.png) |
 
 ## 4. Funcionalidades
 
-- [x] 7 telas com navegação por rotas nomeadas: Justificativa, Consentimento, Visão geral, Dashboards, Detalhe do alerta, Registrar ruído e Configurações
-- [x] Identidade visual própria e consistente: logo, fundo em degradê suave, cartões translúcidos, botões em pílula e navegação flutuante, definidos em um tema único e componentes reutilizáveis
-- [x] 3 dashboards: Níveis de ruído, Horários e fontes, Impacto social
-- [x] Alertas gerados a partir dos dados, com justificativa, evidências, nível de confiança e limitações
-- [x] Aviso visível de que o alerta apoia, mas não substitui, a decisão humana
-- [x] Estado global (Provider) compartilhado entre Visão geral, Dashboards, Detalhe do alerta, Formulário e Configurações
-- [x] Estados de carregamento, erro e lista vazia
-- [x] API simulada com dados sintéticos
-- [x] Persistência local: cache dos dados, ocorrências e preferências
-- [x] Modo offline: sem conexão, o app mostra os últimos dados salvos
-- [x] Formulário com validação e feedback visual de erro
-- [x] Indicador de benefício social: "Protegidos por alerta antecipado"
-- [x] Identidade visual própria e consistente: fundo em degradê suave, cartões translúcidos, botões em pílula e navegação flutuante, definidos em um tema único e componentes reutilizáveis
-- [x] Tema claro e escuro, alto contraste e tamanho de texto ajustável
-- [x] Sensibilidade dos alertas ajustável pelo usuário
-- [x] Testes automatizados (lógica, persistência e layout em vários tamanhos de tela)
+- [x] Navegação entre telas por rotas nomeadas e passagem de parâmetros.
+- [x] Visão geral com resumo dos indicadores e regiões monitoradas.
+- [x] Três dashboards territoriais: níveis de ruído, fontes e impacto social.
+- [x] Gráficos e indicadores para análise dos dados.
+- [x] Geração de alertas com justificativas, evidências, confiança e limitações.
+- [x] Aviso de que os alertas apoiam, mas não substituem, a decisão humana.
+- [x] Gerenciamento de estado global com Provider.
+- [x] Estados de carregamento, erro e ausência de dados.
+- [x] Serviço de dados sintéticos para simular a integração com uma fonte externa.
+- [x] Persistência local de dados, ocorrências e preferências.
+- [x] Recuperação dos últimos dados salvos quando não há conexão.
+- [x] Formulário de registro de ocorrências com validação e mensagens de erro.
+- [x] Indicador de benefício social relacionado à proteção de escolas e hospitais.
+- [x] Consentimento explícito e possibilidade de revogação.
+- [x] Tema claro, escuro e alto contraste.
+- [x] Ajuste do tamanho do texto e da sensibilidade dos alertas.
+- [x] Testes automatizados para regras de alertas, classificação de ruído, estatísticas, validação e persistência.
 
 ## 5. Dados e alertas
 
-### Fonte dos dados
-Os dados são **sintéticos**, gerados por uma API simulada (`MockNoiseApiService`). **Não são medições reais.**
-- 6 regiões de São Paulo: Pinheiros, Mooca, Centro, Vila Mariana, Santana e Barra Funda.
-- 14 dias de leituras por região, uma a cada 3 horas.
-- Cada região tem um perfil próprio (nível base, tendência e fontes de ruído), para os alertas contarem histórias diferentes.
-- A geração usa semente fixa: os dados são reproduzíveis.
-- Os limites de referência por tipo de área são **adaptados da NBR 10151:2019** (por exemplo, 50 dB de dia e 45 dB à noite em áreas sensíveis). Uma avaliação formal exige medição técnica conforme a norma.
+### 5.1. Fonte dos dados
 
-### Como os alertas são gerados
-O motor de alertas (`lib/logic/alert_engine.dart`) analisa cada região assim:
+O aplicativo utiliza dados **sintéticos**, gerados pelo serviço `MockNoiseApiService`. Portanto, os valores apresentados são simulados e não representam medições reais de poluição sonora.
 
-1. Calcula a **média diária diurna** (7h às 22h), usando só dias completos, com as 5 leituras diurnas.
-2. Calcula a **média móvel de 3 dias**, que suaviza a oscilação de cada dia.
-3. Ajusta uma **regressão linear** nos dias analisados, para obter a tendência (dB por dia) e o **R²**, que diz quão bem a reta explica os dados.
-4. Classifica o resultado:
+A simulação contempla:
 
-| Resultado | Condição | Nível |
+- Seis regiões de São Paulo: Pinheiros, Mooca, Centro, Vila Mariana, Santana e Barra Funda.
+- Histórico de até 14 dias de leituras por região.
+- Leituras distribuídas em intervalos de três horas.
+- Diferentes perfis de ruído, tendências e fontes predominantes para cada região.
+- Geração reproduzível dos dados por meio de sementes fixas.
+
+As regiões também possuem informações simuladas sobre escolas, hospitais, reclamações e classificação de zona.
+
+Os limites de referência por tipo de área foram adaptados da ABNT NBR 10151:2019, incluindo referências diurnas e noturnas. Esses valores são utilizados para demonstrar a lógica do aplicativo e não substituem medições técnicas ou avaliações oficiais conforme a norma.
+
+### 5.2. Como os alertas são gerados
+
+O processamento é realizado pelo motor de alertas localizado em `lib/logic/alert_engine.dart`.
+
+A análise segue estas etapas:
+
+1. **Média diária diurna:** calcula a média das leituras realizadas entre 7h e 22h, considerando dias completos.
+2. **Média móvel:** calcula a média móvel de três dias para reduzir oscilações pontuais.
+3. **Regressão linear:** analisa a evolução dos níveis de ruído e calcula a inclinação da tendência em dB por dia.
+4. **Coeficiente R²:** avalia o quanto a tendência linear representa os dados analisados.
+5. **Projeção:** estima em quantos dias o nível de ruído poderá alcançar o limite de referência.
+6. **Classificação:** determina o nível de alerta conforme os limites e as condições configuradas.
+
+### 5.3. Classificação dos alertas
+
+| Situação identificada | Condição | Classificação |
 |---|---|---|
-| Limite excedido | Média móvel acima do limite diurno da zona | **ALERTA** (até 5 dB acima) ou **CRÍTICO** (mais de 5 dB acima) |
-| Tendência de alta | Abaixo do limite, tendência de pelo menos 0,10 dB/dia, R² de pelo menos 0,40 e limite atingido em até 14 dias | **ATENÇÃO** |
-| Sem alerta | Nenhuma das condições acima | **NORMAL** |
-| Dados insuficientes | Menos de 7 dias completos | **NORMAL** (confiança baixa) |
+| Limite excedido | Média móvel acima do limite da zona, até 5 dB acima | ALERTA |
+| Excesso elevado | Média móvel mais de 5 dB acima do limite | CRÍTICO |
+| Tendência de aumento | Ruído abaixo do limite, tendência mínima de 0,10 dB/dia, R² mínimo de 0,40 e limite projetado em até 14 dias | ATENÇÃO |
+| Sem condição de alerta | Nenhuma das condições anteriores | NORMAL |
+| Dados insuficientes | Menos de sete dias completos de dados | NORMAL, com baixa confiança |
 
-A tendência mínima (0,05, 0,10 ou 0,20 dB/dia) e a antecedência (7, 14 ou 21 dias) podem ser ajustadas em **Configurações**. Os limites em dB não mudam.
+Os parâmetros de tendência mínima e antecedência podem ser ajustados nas configurações do aplicativo. Os limites de referência em decibéis não são alterados pelo usuário.
 
-Cada alerta mostra: resumo, evidências, nível de confiança (**Baixa**, **Média** ou **Alta**), limitações e o aviso de decisão humana. A confiança é **Alta** com 10 ou mais dias completos e, no alerta de tendência, com R² de pelo menos 0,70.
+### 5.4. Confiança das previsões
 
-### Métricas usadas
-Média móvel de 3 dias (dB), inclinação da reta (dB/dia), R², projeção de dias até o limite, limite diurno da zona (dB).
+Cada alerta apresenta um nível de confiança — baixo, médio ou alto — considerando a quantidade de dados disponíveis e a qualidade do ajuste da regressão.
 
-### Limitações e vieses
-- **Dados sintéticos:** os perfis foram desenhados pelos autores e não representam o ruído real dos bairros.
-- **Janela curta:** 14 dias não captam sazonalidade, feriados ou mudanças de comportamento.
-- **Projeção linear:** assume que o ritmo atual continua. Fim de obra ou de evento não é previsto.
-- **Só o período diurno:** o motor usa o limite diurno. Ruído noturno e picos curtos não geram alerta.
-- **Zonas simplificadas:** cada bairro tem um único tipo de área, o que não reflete a variação dentro dele.
-- **Viés de subnotificação:** as reclamações dependem de quem registra. Regiões com menos acesso ao app tendem a aparecer menos.
+Para os alertas de tendência, um R² de pelo menos 0,70 e dez ou mais dias completos de dados permitem classificar a confiança como alta.
 
-### Quando as previsões não são confiáveis
-- Com menos de 7 dias completos de dados.
-- Quando o R² é baixo: os dados oscilam sem direção clara.
-- Diante de mudanças bruscas, como início ou fim de obra e eventos pontuais.
-- Para decisões de alto impacto: o alerta é um apoio, **a decisão final é sempre humana**.
+A confiança indica a consistência dos dados utilizados no cálculo. Ela não representa uma garantia de que o evento previsto acontecerá.
+
+### 5.5. Métricas utilizadas
+
+| Métrica | Finalidade |
+|---|---|
+| Média móvel de três dias | Suavizar oscilações dos níveis de ruído |
+| Inclinação da regressão linear | Identificar a direção e a velocidade da tendência |
+| R² | Avaliar a qualidade do ajuste linear |
+| Projeção de dias até o limite | Estimar quando o limite poderá ser alcançado |
+| Limite de referência em dB | Comparar os níveis observados com o parâmetro da zona |
+
+### 5.6. Limitações e possíveis vieses
+
+- **Dados sintéticos:** os valores são simulados e não representam condições reais dos bairros.
+- **Histórico limitado:** a janela de até 14 dias não contempla sazonalidades, feriados ou mudanças de comportamento de longo prazo.
+- **Projeção linear:** pressupõe a continuidade da tendência observada e não prevê automaticamente eventos inesperados.
+- **Análise diurna:** o motor utiliza o limite diurno para a classificação apresentada, não contemplando integralmente o comportamento do ruído noturno.
+- **Regiões simplificadas:** cada bairro possui uma classificação territorial predominante, que não representa todas as diferenças internas.
+- **Subnotificação:** reclamações registradas podem não representar a totalidade dos problemas, pois dependem da participação da população.
+
+### 5.7. Quando as previsões não são confiáveis
+
+Os resultados devem ser interpretados com cautela quando:
+
+- Existem menos de sete dias completos de dados.
+- O R² é baixo e os dados apresentam oscilações sem tendência clara.
+- Ocorrem mudanças repentinas, como obras, eventos ou alterações no trânsito.
+- Os dados disponíveis não representam adequadamente a região analisada.
+
+**Os alertas são ferramentas de apoio à análise. A decisão final deve ser sempre humana**, especialmente quando envolver medidas públicas ou decisões que possam afetar a população.
 
 ## 6. Privacidade e inclusão
 
-### Privacidade
-- **Consentimento explícito** na primeira abertura, com texto claro. Pode ser revogado em Configurações.
-- **Anonimato:** o app não pede nome, e-mail nem telefone.
-- **Localização só por bairro**, nunca o endereço exato.
-- **Dados só no aparelho:** as ocorrências ficam salvas localmente e não são enviadas a nenhum servidor.
-- **Validação contra dados pessoais:** o formulário recusa e-mail e telefone na descrição e exige a confirmação de que não há dados pessoais.
-- **Controle do usuário:** é possível excluir uma ocorrência, apagar todas e revogar o consentimento.
+### 6.1. Privacidade
 
-### Acessibilidade
-- **Contraste:** o texto do app tem contraste muito acima de 4,5:1 sobre o degradê. As etiquetas de nível ajustam a cor do texto para atingir pelo menos 4,5:1 em qualquer tema, e os ícones coloridos ajustam a cor para pelo menos 3:1 (verificado por teste automatizado).
-- **Leitores de tela:** a logo tem descrição em texto, os cartões de região são lidos como botão, os títulos são marcados como cabeçalho e cada gráfico tem uma descrição em texto.
-- **Cor não é o único sinal:** cada situação da região tem também um ícone e um texto próprios.
-- **Alto contraste:** fundo liso, cores e bordas mais fortes. Também liga sozinho se o sistema operacional pedir.
-- **Tema claro, escuro ou do sistema.**
-- **Tamanho do texto:** Normal, Grande ou Maior (até 1,3 vez), multiplicando a configuração do sistema.
-- **Leitores de tela:** cartões de região lidos como botão, títulos marcados como cabeçalho e cada gráfico com uma descrição em texto.
-- **Área de toque** de pelo menos 48 px nos botões principais.
+O SilenceMAP adota medidas para reduzir a coleta e a exposição de informações pessoais:
+
+- Consentimento explícito na primeira utilização do aplicativo.
+- Possibilidade de revogar o consentimento nas configurações.
+- Formulário sem solicitação de nome, e-mail ou telefone.
+- Identificação territorial por bairro, sem necessidade de endereço residencial.
+- Ocorrências armazenadas localmente no dispositivo.
+- Validação da descrição para evitar o registro de e-mails e telefones.
+- Possibilidade de excluir ocorrências individualmente ou apagar os registros armazenados.
+
+Os dados de ocorrências são mantidos no aparelho e não são enviados a um servidor pelo fluxo de registro implementado.
+
+### 6.2. Acessibilidade
+
+O aplicativo disponibiliza recursos para facilitar a utilização por diferentes usuários:
+
+- Tema claro, escuro e alto contraste.
+- Ajuste do tamanho do texto.
+- Descrições textuais para gráficos.
+- Elementos com semântica para leitores de tela.
+- Identificação de situações por texto e ícones, não somente por cores.
+- Títulos e componentes organizados para facilitar a leitura.
+- Áreas de toque adequadas nos principais controles.
+
+Esses recursos buscam tornar a interface mais compreensível e acessível, inclusive para pessoas que utilizam tecnologias assistivas.
 
 ## 7. Tecnologias e decisões técnicas
 
-| Escolha | Por quê |
+| Tecnologia | Utilização |
 |---|---|
-| **Flutter** | Um só código para Android e iOS, como pede a disciplina |
-| **Provider** | Estado global simples e testável, suficiente para o escopo do app |
-| **fl_chart** | Gráficos de linha, pizza e barras nativos, sem WebView |
-| **shared_preferences** | Persistência leve para cache, ocorrências e preferências |
-| **intl** | Formatação de datas |
-| **API simulada** | Permite simular erro e falta de conexão, com dados reproduzíveis |
-| **Tema único com `ThemeExtension`** | Concentra cores, degradê e cartões em um só lugar, sem repetir estilos tela a tela |
+| Flutter | Desenvolvimento da aplicação mobile multiplataforma |
+| Dart | Linguagem de programação |
+| Provider | Gerenciamento de estado global |
+| fl_chart | Construção dos gráficos e visualizações |
+| shared_preferences | Persistência local de dados e preferências |
+| intl | Formatação de datas |
+| flutter_test | Testes automatizados |
+| flutter_lints | Análise e padronização do código |
 
-### Arquitetura
-```
+### 7.1. Arquitetura do projeto
+
+A aplicação foi organizada em camadas para separar responsabilidades e facilitar a manutenção.
+
+```text
 lib/
 ├── main.dart
 ├── core/
-│   ├── theme/          # cores, tema claro/escuro, alto contraste e estilo de vidro
-│   └── routes/         # rotas nomeadas
-├── models/             # Region, NoiseReading, Occurrence, AlertConfig
+│   ├── theme/
+│   │   ├── app_theme.dart
+│   │   ├── app_colors.dart
+│   │   └── glass_style.dart
+│   └── routes/
+│       └── app_routes.dart
+├── models/
+│   ├── noise_reading.dart
+│   ├── alert_config.dart
+│   ├── noise_data.dart
+│   ├── region.dart
+│   └── occurrence.dart
 ├── data/
-│   ├── services/       # API simulada
-│   └── repositories/   # junta API + cache local
-├── logic/              # motor de alertas, estatísticas, validação
-├── providers/          # estado global (ruído e configurações)
+│   ├── services/
+│   │   └── mock_noise_api_service.dart
+│   └── repositories/
+│       └── noise_repository.dart
+├── logic/
+│   ├── alert_engine.dart
+│   ├── noise_stats.dart
+│   ├── occurrence_validator.dart
+│   └── noise_level.dart
+├── providers/
+│   ├── settings_provider.dart
+│   └── noise_provider.dart
 └── ui/
-    ├── screens/        # telas
-    └── widgets/        # componentes reutilizáveis
+    ├── screens/
+    └── widgets/
+
+test/
+├── alert_engine_test.dart
+├── mock_api_test.dart
+├── noise_level_test.dart
+├── noise_stats_test.dart
+├── occurrence_test.dart
+└── repository_test.dart
 ```
-As telas só leem do Provider, que só fala com o repositório. A lógica de alertas, estatísticas e validação fica fora das telas e é testada sozinha.
+
+**Separação de responsabilidades:**
+
+- `models`: representa as entidades e estruturas de dados.
+- `data`: contém o serviço de dados simulados e o repositório responsável pela integração com o armazenamento local.
+- `logic`: concentra cálculos, classificação, validações e geração de alertas.
+- `providers`: controla e compartilha o estado da aplicação.
+- `ui`: reúne as telas e componentes visuais reutilizáveis.
+- `core`: centraliza configurações de tema e rotas.
+
+Essa organização evita concentrar regras de negócio diretamente nas telas e facilita a manutenção e os testes da aplicação.
 
 ## 8. Como executar
 
-**Requisitos:** Flutter instalado (`flutter doctor` sem erros) e um emulador Android, um aparelho físico ou o Chrome.
+### 8.1. Pré-requisitos
+
+- Flutter instalado.
+- Dart compatível com a versão definida no `pubspec.yaml`.
+- Android Studio ou Visual Studio Code.
+- Emulador Android, dispositivo físico ou navegador Chrome.
+
+Verifique a instalação:
 
 ```bash
-git clone https://github.com/[USUARIO]/[REPOSITORIO].git
-cd [REPOSITORIO]
+flutter doctor
+```
+
+### 8.2. Clonar o repositório
+
+```bash
+git clone [https://github.com/gabylorentz/SilenceMAP---CitizenTech]
+cd silencemap_estrutura
+```
+
+### 8.3. Instalar as dependências
+
+```bash
 flutter pub get
+```
+
+### 8.4. Executar o aplicativo
+
+```bash
 flutter run
 ```
 
-**Variáveis de ambiente:** não há. O app usa dados sintéticos e não precisa de chaves de API.
+Para executar no Chrome:
 
-**Testes e análise:**
+```bash
+flutter run -d chrome
+```
+
+### 8.5. Executar os testes
+
 ```bash
 flutter test
+```
+
+### 8.6. Analisar o código
+
+```bash
 flutter analyze
 ```
 
-**Gerar o APK (opcional):**
+### 8.7. Gerar APK
+
+Para gerar uma versão de lançamento:
+
 ```bash
 flutter build apk --release
 ```
-O arquivo fica em `build/app/outputs/flutter-apk/app-release.apk`.
 
-## 9. Vídeo
+O arquivo gerado estará em:
 
-[Assistir ao vídeo de demonstração](https://[LINK_DO_VIDEO])
+```text
+build/app/outputs/flutter-apk/app-release.apk
+```
+
+**Configuração:** o projeto utiliza dados sintéticos e armazenamento local, não exigindo chaves de API ou variáveis de ambiente para a execução padrão.
+
+## 9. Vídeo de demonstração
+
+O vídeo apresenta o problema abordado, a proposta do SilenceMAP e a demonstração das principais funcionalidades, incluindo dashboards, alertas, formulário, configurações e modo offline.
+
+**Link:** https://youtu.be/GiCKyaFmXo8?is=bzHzWVCCfig-BmlG
 
 ## 10. Licença
 
-Projeto acadêmico, FIAP, Global Solution 2026.2.
+Projeto acadêmico desenvolvido para a FIAP, como parte da Global Solution 2026.2, na disciplina **Cross-Platform Application Development**, dentro do desafio **Territory Predictive Insights**.
+
+Todos os direitos relacionados ao desenvolvimento acadêmico pertencem aos integrantes do projeto.
+
+---
+
+**SilenceMAP — dados para antecipar problemas e apoiar territórios mais saudáveis.**
